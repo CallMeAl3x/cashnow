@@ -50,7 +50,16 @@ final class SecurityController extends AbstractController
         // page, after a successful login you are redirected to a page in the previous
         // locale. This code regenerates the referrer URL whenever the login page is
         // browsed, to ensure that its locale is always the current one.
-        $this->saveTargetPath($request->getSession(), 'main', $this->generateUrl('admin_index'));
+        $session = $request->getSession();
+        $targetPath = $session->get('_security.main.target_path');
+        if ($targetPath === null || str_contains($targetPath, '/admin')) {
+            // If user's role is admin, redirect to the admin index page, otherwise redirect to the blog index page.
+            if ($this->isGranted('ROLE_ADMIN')) {
+                $this->saveTargetPath($session, 'main', $this->generateUrl('admin_index'));
+            } else {
+                $this->saveTargetPath($session, 'main', $this->generateUrl('blog_index'));
+            }
+        }
 
         return $this->render('security/login.html.twig', [
             // last username entered by the user (if any)
