@@ -56,7 +56,7 @@ Tests
 
 * Install the Symfony project in your local environment, naming the project cashnow_test.
 * Create a personal git repo (gitlab, github, ...) with the original project. Create a branch for the test.
-* Provide access to the repo to orey@cashnowmobile.com
+* Provide access to the repo to paradiguet@cashnowmobile.com
 * Ensure everything works and there are no typos by thoroughly testing your project. Use your unit tests to check and fix some errors.
 * An end user has indicated that they would prefer to see the latest posts first. Can you make this change?
 * An existing feature triggers an email to the author of a post when a comment is added. This feature does not work in dev mode. Can you fix it?
