@@ -7,6 +7,7 @@
 
     {{ include('admin/blog/_form.html.twig', {
         form: form,
+        post: post,
         button_label: 'action.save'|trans,
         include_back_to_home_link: true,
     }, with_context = false) }}

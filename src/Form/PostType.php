@@ -21,6 +21,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 /**
  * Defines the form used to create and manipulate blog posts.
@@ -68,6 +69,11 @@ final class PostType extends AbstractType
             ])
             ->add('tags', TagsInputType::class, [
                 'label' => 'label.tags',
+                'required' => false,
+            ])
+            ->add('upload', FileType::class, [
+                'label' => 'Upload File',
+                'mapped' => false,
                 'required' => false,
             ])
             // form events let you modify information or fields at different steps

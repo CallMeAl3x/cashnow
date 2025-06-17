@@ -58,13 +58,40 @@ Tests
 * Create a personal git repo (gitlab, github, ...) with the original project. Create a branch for the test.
 * Provide access to the repo to paradiguet@cashnowmobile.com
 * Ensure everything works and there are no typos by thoroughly testing your project. Use your unit tests to check and fix some errors.
+
+Fixed an error in "SecurityController.php" where "last_username" was typed "last_name".
+
 * An end user has indicated that they would prefer to see the latest posts first. Can you make this change?
+
+Added this feature by changing the order from ASCENDING to DESCENDING to get the latest posts.
+
 * An existing feature triggers an email to the author of a post when a comment is added. This feature does not work in dev mode. Can you fix it?
+
+It's because of the config of the dev mode, if you want to enable it you will need to change mailer.yaml to a real dsn and then re-run the project.
+
 * If a user logs in, they are redirected to the admin page, which causes an error if the assigned role is USER. Fix this issue by redirecting to the blog page after login.
+
+Added a check to see if the currently logged-in user has the "ROLE_ADMIN" role. If so, they are redirected to /admin; otherwise, they are redirected to /blog.
+
 * Search does not take into account the tags assigned to posts. Modify it to fix this issue.
-* Add the ability to upload a file to the post object, based on a service (we will also use the commands make:entity to modify the Post entity, make:migration , and doctrine:migration:migrate
-  to update the database).
+
+Search now takes into account the tags assigned to posts, since we added a leftJoin to also check the Tag table for matches with the search input.
+
+- Added an upload property to the Post entity and updated the database schema using Doctrine migrations.
+
+- Created a FileUploader service to handle file naming and storage logic.
+
+- Updated the blog post form to include a file input, and modified the controller to use the service and persist the uploaded filename.
+
+- Enhanced templates to display the uploaded file and implemented a JavaScript live image preview for improved user experience.
+
+- Images are stored locally in uploads for straightforward integration. For production or more robust needs, consider using AWS S3 or another cloud storage provider.
+
+- Enabled the fileinfo PHP extension on the server to support file uploads.
+
 * Update the README to explain your feature.
+
+Changes made by [Alexandre Bonefons](https://portfolio.bonefons.com)
 
 ```bash
 cd cashnow_test/

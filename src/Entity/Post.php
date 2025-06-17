@@ -58,6 +58,9 @@ class Post
     #[Assert\Length(min: 10, minMessage: 'post.too_short_content')]
     private ?string $content = null;
 
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $upload = null;
+
     #[ORM\Column]
     private \DateTimeImmutable $publishedAt;
 
@@ -121,6 +124,16 @@ class Post
     public function setContent(?string $content): void
     {
         $this->content = $content;
+    }
+
+    public function getUpload(): ?string
+    {
+        return $this->upload;
+    }
+
+    public function setUpload(?string $upload): void
+    {
+        $this->upload = $upload;
     }
 
     public function getPublishedAt(): \DateTimeImmutable

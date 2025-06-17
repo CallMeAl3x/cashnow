@@ -17,6 +17,18 @@
     {{ post.content|markdown_to_html|sanitize_html }}
 
     {{ include('blog/_post_tags.html.twig') }}
+
+    {# Display the uploaded file if it exists #}
+    {% if post.upload %}
+        <div class="mb-3">
+            {% if post.upload matches '/\\.(jpg|jpeg|png|gif|webp)$/i' %}
+                <img src="{{ asset('uploads/' ~ post.upload) }}" alt="Uploaded image" style="max-width: 300px; max-height: 300px; margin-top: 10px;">
+            {% else %}
+                <strong>File:</strong>
+                <a href="{{ asset('uploads/' ~ post.upload) }}" target="_blank">{{ post.upload }}</a>
+            {% endif %}
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block sidebar %}

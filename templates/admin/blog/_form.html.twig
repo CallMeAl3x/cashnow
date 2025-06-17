@@ -11,8 +11,31 @@
     {{ include('blog/_delete_post_confirmation.html.twig') }}
 {% endif %}
 
-{{ form_start(form, {attr: attr|default({})}) }}
-    {{ form_widget(form) }}
+{{ form_start(form, {attr: attr|default({}), enctype: 'multipart/form-data'}) }}    
+    {{ form_row(form.title) }}
+    {{ form_row(form.summary) }}
+    {{ form_row(form.content) }}
+    {{ form_row(form.publishedAt) }}
+    {{ form_row(form.tags) }}
+    {# Add id to file input for JS, force id using block override #}
+    <div class="form-group">
+        {{ form_label(form.upload) }}
+        {{ form_widget(form.upload, {'id': 'upload-input'}) }}
+        {{ form_help(form.upload) }}
+        {{ form_errors(form.upload) }}
+    </div>
+
+    {# Preview container #}
+    <div id="upload-preview" class="mb-3">
+        {% if post is defined and post.upload %}
+            {% if post.upload matches '/\\.(jpg|jpeg|png|gif|webp)$/i' %}
+                <img src="{{ asset('uploads/' ~ post.upload) }}" alt="Current image" style="max-width: 300px; max-height: 300px; margin-top: 10px;">
+            {% else %}
+                <strong>Current file:</strong>
+                <a href="{{ asset('uploads/' ~ post.upload) }}" target="_blank">{{ post.upload }}</a>
+            {% endif %}
+        {% endif %}
+    </div>
 
     <button type="submit" class="{{ button_css|default("btn btn-primary") }}">
         <i class="fa fa-save" aria-hidden="true"></i> {{ button_label|default('label.create_post'|trans) }}
@@ -24,3 +47,6 @@
         </a>
     {% endif %}
 {{ form_end(form) }}
+
+{# JS for live preview #}
+<script src="{{ asset('js/upload-preview.js') }}"></script>
